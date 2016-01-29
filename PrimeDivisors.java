@@ -8,7 +8,7 @@ public class PrimeDivisors {
 			System.exit(0);
 		}
 		int halfN = n / 2;
-		for ( int i = 2; i < halfN; i++ ) {
+		for ( int i = 2; i <= halfN; i++ ) {
 			if ( n % i == 0 && isPrime(i) ) {
 				System.out.println(i);
 			}
