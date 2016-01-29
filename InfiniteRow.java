@@ -3,8 +3,12 @@ import java.lang.Math;
 public class InfiniteRow {
 
 	public static void main(String[] args) {
-		System.out.println(myExp(1.0));
-		System.out.println(Math.exp(1.0));
+		double x = 7.0;
+		double sum = myExp(x);
+		System.out.println("Sum: " + sum);
+		double mathExpX = Math.exp(x);
+		System.out.println("Math.exp(x): " + mathExpX);
+		System.out.println("Difference: " + (sum - mathExpX));
 	}
 	
 	public static double myExp(double x) {
