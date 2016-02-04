@@ -1,0 +1,56 @@
+/***
+*Describes complex numbers
+* @author Denys Triasunov
+*
+*/
+public class ComplexNumber {
+	/**
+	 * Real part of complex number
+	 */
+	private double real;
+	/**
+	 * Imaginary part of complex number
+	 */
+	private double im;
+	
+	/**
+	 * Initializes a complex number
+	 * @param real - real part of a complex number
+	 * @param im - imaginary part of a complex number
+	 */
+	public ComplexNumber(double real, double im) {
+		this.real = real;
+		this.im = im;
+	}
+	/**
+	 * Default constructor sets complex zero
+	 */
+	public ComplexNumber() {}
+	
+	/**
+	 * returns real part of a complex number
+	 * @return
+	 */
+	public double getReal() {
+		return real;
+	}
+	/**
+	 * return imaginary part of a complex number
+	 * @return
+	 */
+	public double getIm() {
+		return im;
+	}
+	
+	
+	public void add(ComplexNumber other) {
+		this.real += other.getReal();
+		this.im += other.getIm();
+	}
+	public void multiply(ComplexNumber other) {
+		
+	}
+	public double getModule() {
+		
+	}
+}
