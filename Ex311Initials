@@ -1,0 +1,11 @@
+public class Ex311Initials {
+
+	public static void main(String[] args) {
+		String name = "Трясунов Денис Володимирович";
+		String [] nameParts = name.split(" ");
+		String initials = nameParts[0] + " " + nameParts[1].substring(0,1) + "." + 
+				nameParts[2].substring(0,1) + ".";
+		System.out.println(initials);
+	}
+
+}
