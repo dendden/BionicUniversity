@@ -51,16 +51,36 @@ public class SimpleDepo {
 	}
 	
 	public double interest() {
-		long daysOfInterest = 0;
+		double interest = 0;
+		double daysCoeff = 0;
+		int daysCurrentYear = 0;
+		int daysOtherYear = 0;
 		LocalDate endDate = startDate.plusDays(days);
-		boolean withinOneYear = startDate.getYear() == endDate.getYear();
+		boolean withinOneYear = (startDate.getYear() == endDate.getYear());
 		
-		if ( startDate.isLeapYear() && withinOneYear ) {
-			daysOfInterest = startDate.until(endDate, ChronoUnit.DAYS);
-		} else if ( startDate.isLeapYear() ) {
-			LocalDate endOfYear = LocalDate.of(startDate.getYear(), 12, 31);
-			
+		if ( withinOneYear ) {
+			if ( startDate.isLeapYear() ) {
+				daysCoeff = days / 366.0;
+			} else {
+				daysCoeff = days / 365.0;
+			}
+		} else {
+			LocalDate newYear = LocalDate.of(startDate.getYear()+1, 1, 1);
+			daysCurrentYear = (int) startDate.until(newYear, ChronoUnit.DAYS);
+			daysOtherYear = days - daysCurrentYear;
+
+			if ( startDate.isLeapYear() ) {
+				daysCoeff = daysCurrentYear / 366.0 + daysOtherYear / 365.0;
+			} else if ( endDate.isLeapYear() ) {
+				daysCoeff = daysCurrentYear / 365.0 + daysOtherYear / 366.0;
+			} else {
+				daysCoeff = days / 365.0;
+			}
 		}
+
+		interest = this.sum * (this.interestRate / 100) * daysCoeff;
+		interest = ((int) Math.round(interest*100)) / 100.0;
+		return interest;
 	}
 	
 }
