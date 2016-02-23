@@ -70,9 +70,10 @@ public class SimpleDepoMC {
 	 * @return total interest as a double value
 	 */
 	public double interest() {
-		double interest = 0;
 		double annualInterest = 0;
 		double dailyInterest = 0;
+		double monthlyInterest = 0;
+		double capitalizedSum = this.sum;
 		int daysInMonth = 0;
 		int daysLeft = days;
 		double daysCoeff = 0;
@@ -105,17 +106,39 @@ public class SimpleDepoMC {
 			}
 		}
 
-		annualInterest = this.sum * (this.interestRate / 100) * daysCoeff;
-		dailyInterest = annualInterest / days;
-		while ( daysLeft > 0 ) {
-			if ( isFirstMonth ) {
-				daysInMonth = currentMonth.lengthOfMonth() - currentMonth.getDayOfMonth() + 1;
+		while ( daysLeft > 1 ) {
+			annualInterest = capitalizedSum * (this.interestRate / 100) * daysCoeff;
+			dailyInterest = annualInterest / days;
+			System.out.println("annual interest: " + annualInterest);
+			System.out.println("daily interest: " + dailyInterest);
+			System.out.println("days left: " + daysLeft);
+			
+			if ( isFirstMonth && isLastMonth ) {
+				System.out.println("FIRST & LAST MONTH");
+				daysInMonth = daysLeft;
+			} else if ( isFirstMonth ) {
+				System.out.println("FIRST MONTH");
+				daysInMonth = currentMonth.lengthOfMonth() - currentMonth.getDayOfMonth();
 			} else if ( isLastMonth ) {
-				daysInMonth = currentMonth.getDayOfMonth();
+				System.out.println("LAST MONTH");
+				daysInMonth = endDate.getDayOfMonth() - 1;
 			} else {
-				
+				System.out.println("FULL MONTH");
+				daysInMonth = currentMonth.lengthOfMonth();
 			}
+			System.out.println("days in month: " + daysInMonth);
+			
+			monthlyInterest = dailyInterest * daysInMonth;
+			System.out.println("monthly interest: " + monthlyInterest);
+			capitalizedSum += monthlyInterest;
+			System.out.println("cap. sum: " + capitalizedSum);
+			daysLeft -= daysInMonth;
+			currentMonth = currentMonth.plusMonths(1);
+			isFirstMonth = false;
+			isLastMonth = ( currentMonth.getYear() == endDate.getYear() && 
+					currentMonth.getMonthValue() == endDate.getMonthValue() );
 		}
-		return interest;
+		return annualInterest;
 	}
+}
 	
