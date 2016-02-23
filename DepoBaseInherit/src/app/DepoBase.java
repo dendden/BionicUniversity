@@ -3,13 +3,27 @@ package app;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
-public class DepoBase {
+public abstract class DepoBase implements Cloneable {
 	protected LocalDate startDate;
 	protected int dayLong;
 	protected double sum;
 	protected double interestRate;
 
 	public DepoBase() {
+	}
+	
+	public DepoBase(LocalDate startDate, int days, double sum, double ir) {
+		this.startDate = startDate;
+		this.dayLong = days;
+		this.sum = sum;
+		this.interestRate = ir;
+	}
+	
+	public DepoBase clone() throws CloneNotSupportedException {
+		DepoBase cln = (DepoBase) super.clone();
+		cln.startDate = (LocalDate) startDate.clone();
+		
+		return cln;
 	}
 	
 	public LocalDate getStartDate(){
@@ -40,23 +54,7 @@ public class DepoBase {
 		interestRate = value;
 	}
 	
-	public double getInterest(){
-		double interest = 0.0;
-		LocalDate start = startDate;
-		LocalDate maturity = start.plusDays(dayLong);
-		int startYear = start.getYear();
-		int maturityYear = maturity.getYear();
-		start = start.plusDays(1);
-		if (startYear == maturityYear){
-			interest = calculateInterest(start, maturity);
-		} else {
-			LocalDate endOfYear = LocalDate.of(startYear, 12, 31);
-			interest = calculateInterest(start, endOfYear);
-			LocalDate beginOfYear = endOfYear.plusDays(1);
-			interest += calculateInterest(beginOfYear, maturity);
-		}
-		return interest;
-	}
+//	public abstract double getInterest();
 
 	public double calculateInterest(LocalDate start, LocalDate maturity){
 		int startYear = start.getYear();

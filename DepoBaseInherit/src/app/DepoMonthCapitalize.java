@@ -2,7 +2,7 @@ package app;
 
 import java.time.LocalDate;
 
-public class DepoMonthCapitalize extends DepoBase {
+public class DepoMonthCapitalize extends DepoBase implements InterestInterface {
 
 	protected LocalDate startDate;
 	protected int dayLong;
@@ -10,6 +10,10 @@ public class DepoMonthCapitalize extends DepoBase {
 	protected double interestRate;
 
 	public DepoMonthCapitalize() {   }
+	
+	public DepoMonthCapitalize(LocalDate startDate, int days, double sum, double ir) {
+		super(startDate, days, sum, ir);
+	}
 	
 	public double getInterest(){
 		double interest = 0.0;          // проценты за текущий период

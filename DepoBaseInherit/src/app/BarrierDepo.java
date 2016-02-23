@@ -2,11 +2,15 @@ package app;
 
 import java.time.LocalDate;
 
-public class BarrierDepo extends DepoBase {
+public class BarrierDepo extends DepoBase implements InterestInterface {
 	public static final double MIDDLE_SUM = 50000.0;
 	public static final double UPPER_SUM = 100000.0;
 
 	public BarrierDepo() {}
+	
+	public BarrierDepo(LocalDate startDate, int days, double sum, double ir) {
+		super(startDate, days, sum, ir);
+	}
 	
 	public double getInterest(){
 		double localRate = interestRate;
