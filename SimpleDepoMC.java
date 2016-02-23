@@ -105,18 +105,19 @@ public class SimpleDepoMC {
 				daysCoeff = days / 365.0;
 			}
 		}
+		annualInterest = capitalizedSum * (this.interestRate / 100) * daysCoeff;
+		dailyInterest = annualInterest / days;
+		if ( isFirstMonth && isLastMonth ) {
+			System.out.println("FIRST & LAST MONTH");
+			return annualInterest;
+		}
 
 		while ( daysLeft > 1 ) {
-			annualInterest = capitalizedSum * (this.interestRate / 100) * daysCoeff;
-			dailyInterest = annualInterest / days;
 			System.out.println("annual interest: " + annualInterest);
 			System.out.println("daily interest: " + dailyInterest);
 			System.out.println("days left: " + daysLeft);
 			
-			if ( isFirstMonth && isLastMonth ) {
-				System.out.println("FIRST & LAST MONTH");
-				daysInMonth = daysLeft;
-			} else if ( isFirstMonth ) {
+			if ( isFirstMonth ) {
 				System.out.println("FIRST MONTH");
 				daysInMonth = currentMonth.lengthOfMonth() - currentMonth.getDayOfMonth();
 			} else if ( isLastMonth ) {
@@ -137,6 +138,8 @@ public class SimpleDepoMC {
 			isFirstMonth = false;
 			isLastMonth = ( currentMonth.getYear() == endDate.getYear() && 
 					currentMonth.getMonthValue() == endDate.getMonthValue() );
+			annualInterest = capitalizedSum * (this.interestRate / 100) * daysCoeff;
+			dailyInterest = annualInterest / days;
 		}
 		return annualInterest;
 	}
